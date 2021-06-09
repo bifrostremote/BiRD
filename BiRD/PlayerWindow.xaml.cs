@@ -24,6 +24,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BifrostRemoteDesktop.Common.Models.Commands;
+using BiRD.Backend.Models.Commands.MouseActionCommand;
 
 namespace BiRD
 {
@@ -119,7 +121,7 @@ namespace BiRD
             }
             else if (headerInfo == 101)
             {
-                
+
                 bufferFrame = new FrameData(data);
                 //HandleFrame();
                 // NOTE: Is this necessary?
@@ -414,7 +416,8 @@ namespace BiRD
 
         private void UpdateImage(byte[] bitmapImage)
         {
-            Application.Current.Dispatcher.Invoke(() => {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
                 //Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
                 //double dx = m.M11;
                 //double dy = m.M22;
@@ -471,12 +474,48 @@ namespace BiRD
 
         private void ImageContainer_MouseMove(object sender, MouseEventArgs e)
         {
-            //var pos = e.GetPosition((IInputElement)sender);
-            //commandTransmitter.SendCommand(CommandType.MovePointerPercentage, new MovePointerPercentageCommandArgs()
-            //{
-            //    PercentageX = pos.X / ImageContainer.ActualWidth,
-            //    PercentageY = pos.Y / ImageContainer.ActualHeight
-            //});
+            var pos = e.GetPosition((IInputElement)sender);
+            commandTransmitter.SendCommand(CommandType.MovePointerPercentage, new MovePointerPercentageCommandArgs()
+            {
+                PercentageX = pos.X / ImageContainer.ActualWidth,
+                PercentageY = pos.Y / ImageContainer.ActualHeight
+            });
+        }
+
+        private void ImageContainer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            commandTransmitter.SendCommand(CommandType.MouseAction,
+                new MouseActionCommandArgs()
+                {
+                    ActionType = MouseActionType.PRESS_LEFT_BTN
+                });
+        }
+
+        private void ImageContainer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            commandTransmitter.SendCommand(CommandType.MouseAction,
+                new MouseActionCommandArgs()
+                {
+                    ActionType = MouseActionType.RELEASE_LEFT_BTN
+                });
+        }
+
+        private void ImageContainer_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            commandTransmitter.SendCommand(CommandType.MouseAction,
+                new MouseActionCommandArgs()
+                {
+                    ActionType = MouseActionType.PRESS_RIGHT_BTN
+                });
+        }
+
+        private void ImageContainer_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            commandTransmitter.SendCommand(CommandType.MouseAction,
+                new MouseActionCommandArgs()
+                {
+                    ActionType = MouseActionType.RELEASE_RIGHT_BTN
+                });
         }
     }
 }

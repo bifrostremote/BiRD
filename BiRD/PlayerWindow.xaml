@@ -6,7 +6,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Image Name="ImageContainer" MouseMove="ImageContainer_MouseMove" />
-
+        <Image Name="ImageContainer" 
+               MouseMove="ImageContainer_MouseMove" 
+               MouseLeftButtonDown="ImageContainer_MouseLeftButtonDown"
+               MouseLeftButtonUp="ImageContainer_MouseLeftButtonUp"
+               MouseRightButtonDown="ImageContainer_MouseRightButtonDown"
+               MouseRightButtonUp="ImageContainer_MouseRightButtonUp"/>
     </Grid>
 </Window>
