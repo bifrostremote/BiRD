@@ -7,30 +7,59 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
 {
     public class WindowsMouseController
     {
-        public bool CanSetCursorPosition => true;
+        // Source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput
+        const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+        const int MOUSEEVENTF_LEFTUP = 0x0004;
+        const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        const int MOUSEEVENTF_RIGHTUP = 0x0010;
 
-        public bool CanGetCursorPosition => true;
+        // Source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input
+        const int INPUT_MOUSE = 0;
 
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetCursorPos(out LPPoint lpPoint);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool SetCursorPos(int x, int y);
-
-        public LPPoint GetCursorPosition()
+        //Source: https://stackoverflow.com/a/10355905
+        #region 
+        private struct INPUT
         {
-            LPPoint point;
-            if (GetCursorPos(out point))
-            {
-                return point;
-            }
-            else
-            {
-                // TODO: Narrow Exception Type.
-                throw new Exception("LPPoint was not available through user32.dll");
-            }
+            public UInt32 Type;
+            public MOUSEKEYBDHARDWAREINPUT Data;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        private struct MOUSEKEYBDHARDWAREINPUT
+        {
+            [FieldOffset(0)]
+            public MOUSEINPUT Mouse;
+        }
+
+        private struct MOUSEINPUT
+        {
+            public Int32 X;
+            public Int32 Y;
+            public UInt32 MouseData;
+            public UInt32 Flags;
+            public UInt32 Time;
+            public IntPtr ExtraInfo;
+        }
+        #endregion
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetCursorPos(int x, int y);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetCursorPos(out LPPoint lpPoint);
+
+        [DllImport("user32.dll")]
+        private static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
+
+        [DllImport("user32.dll")]
+        private static extern bool ClientToScreen(IntPtr hWnd, ref LPPoint lpPoint);
+
+        public LPPoint GetMousePosition()
+        {
+            if (GetCursorPos(out LPPoint point)) return point;
+            throw new Exception();
         }
 
         public void SetCursorPosition(int x, int y)
@@ -40,7 +69,7 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
 
         public void SetCursorPosition(double x, double y)
         {
-            var a = SetCursorPos(Convert.ToInt32(x), Convert.ToInt32(y));
+            SetCursorPos(Convert.ToInt32(x), Convert.ToInt32(y));
         }
 
         public void SetCursorPositionPercentage(double percentageX, double percentageY)
@@ -49,8 +78,36 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
             double y = (SystemParameters.PrimaryScreenHeight / 96 * 120) * percentageY;
 
             SetCursorPosition(x, y);
+        }
 
+        public void PressLeftButton()
+        {
+            InvokeMouseEvent(MOUSEEVENTF_LEFTDOWN);
+        }
 
+        public void ReleaseLeftButton()
+        {
+            InvokeMouseEvent(MOUSEEVENTF_LEFTUP);
+        }
+
+        public void PressRightButton()
+        {
+            InvokeMouseEvent(MOUSEEVENTF_RIGHTDOWN);
+        }
+
+        public void ReleaseRightButton()
+        {
+            InvokeMouseEvent(MOUSEEVENTF_RIGHTUP);
+        }
+
+        private static void InvokeMouseEvent(uint flags)
+        {
+            INPUT input = new INPUT();
+            input.Type = INPUT_MOUSE;
+            input.Data.Mouse.Flags = flags;
+
+            INPUT[] inputs = new INPUT[] { input };
+            SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
         }
     }
 }

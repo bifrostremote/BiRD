@@ -3,7 +3,7 @@
     public enum CommandType
     {
         MovePointer,
-        UpdatePointerState,
+        MouseAction,
         MovePointerPercentage
     }
 }

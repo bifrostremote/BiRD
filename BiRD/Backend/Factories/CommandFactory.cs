@@ -18,9 +18,9 @@ namespace BifrostRemoteDesktop.Common.Factories
                     {
                         return new MovePointerCommand(systemController, (MovePointerCommandArgs)commandArgs);
                     }
-                case CommandType.UpdatePointerState:
+                case CommandType.MouseAction:
                     {
-                        return new PointerUpdateStateCommand(systemController, (PointerUpdateStateCommandArgs)commandArgs);
+                        return new MouseActionCommand(systemController, (MouseActionCommandArgs)commandArgs);
                     }
                 case CommandType.MovePointerPercentage:
                     {
