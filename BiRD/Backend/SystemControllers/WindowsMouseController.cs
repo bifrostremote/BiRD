@@ -74,8 +74,10 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
 
         public void SetCursorPositionPercentage(double percentageX, double percentageY)
         {
-            double x = (SystemParameters.PrimaryScreenWidth / 96 * 120) * percentageX;
-            double y = (SystemParameters.PrimaryScreenHeight / 96 * 120) * percentageY;
+            //double x = (SystemParameters.PrimaryScreenWidth / 96 * 120) * percentageX;
+            //double y = (SystemParameters.PrimaryScreenHeight / 96 * 120) * percentageY;
+            double x = (SystemParameters.PrimaryScreenWidth * percentageX);
+            double y = (SystemParameters.PrimaryScreenHeight * percentageY);
 
             SetCursorPosition(x, y);
         }

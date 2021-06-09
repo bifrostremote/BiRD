@@ -35,7 +35,7 @@ namespace BiRD
     public partial class PlayerWindow : Window
     {
         CommandTransmitter commandTransmitter = new CommandTransmitter();
-        string ClientIP = "10.142.111.158"; // Hans
+        string ClientIP = "127.0.0.1"; //"10.142.111.158"; // Hans
 
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
@@ -285,7 +285,7 @@ namespace BiRD
             byte[] bitmapRawImage = handleFrame.BuildBitmapRaw();
             bitmapRawImage = CompareFrame(bitmapRawImage);
             // Return if no image is found. Or the first 10 bytes is empty.
-            if (bitmapRawImage.All(singleByte => singleByte == 0) || bitmapRawImage.Take(10).All(singleByte => singleByte == 0))
+            if (bitmapRawImage.All(singleByte => singleByte == 0 || singleByte == 1) || bitmapRawImage.Take(10).All(singleByte => singleByte == 0))
                 return;
 
             //bitmapRawImage = CompareFrame(bitmapRawImage);
@@ -404,6 +404,7 @@ namespace BiRD
         {
             using (var ms = new MemoryStream(bitmap))
             {
+                ms.Seek(0, SeekOrigin.Begin);
                 return new Bitmap(ms);
             }
 
@@ -414,6 +415,7 @@ namespace BiRD
             //}
         }
 
+        Object lockObj = new Object();
         private void UpdateImage(byte[] bitmapImage)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -430,11 +432,19 @@ namespace BiRD
                 //    //write to bitmap
                 //    stream.WriteAsync(bitmapImage, 0, bitmapImage.Length);
                 //}
-
                 using (var ms = new MemoryStream(bitmapImage))
                 {
+                    Bitmap bitmap;
                     ms.Seek(0, SeekOrigin.Begin);
-                    Bitmap bitmap = new Bitmap(ms);
+                    try
+                    {
+                        bitmap = new Bitmap(ms);
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
+                    
                     //var bitmap = (BitmapSource)new ImageSourceConverter().ConvertFrom(bitmapImage);
                     //ImageContainer.Source = bitmap;
                     //ImageContainer.Width = imageWidth;
