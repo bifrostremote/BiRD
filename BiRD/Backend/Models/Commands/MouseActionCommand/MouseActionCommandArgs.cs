@@ -5,11 +5,9 @@ namespace BifrostRemoteDesktop.Common.Models.Commands
 {
     public class MouseActionCommandArgs : RemoteControlCommandArgs
     {
-        public MouseActionType ActionType { get; }
+        public MouseActionType ActionType { get; set; }
 
-        public MouseActionCommandArgs(MouseActionType actionType) {
-            ActionType = actionType;
-        }
+        public MouseActionCommandArgs() {}
 
     }
 }
