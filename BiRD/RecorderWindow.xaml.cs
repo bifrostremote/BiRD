@@ -34,7 +34,7 @@ namespace BiRD
         //// Move mouse stuff.
         CommandReceiver commandReceiver = new CommandReceiver(new WindowsSystemController());
         #endregion
-        string ClientIP = "127.0.0.1";//"10.142.104.9"; // Lars
+        string ClientIP = "10.142.111.114"; // Lars
 
         Thread record;
         public RecorderWindow()
@@ -150,7 +150,7 @@ namespace BiRD
 
             // Send data to the endpoint using the socket connection.
             sending_socket.SendTo(header, ep);
-            Thread.Sleep(1);
+            //Thread.Sleep(1);
 
             int percentage = GetPercentage();
             for (int i = 0; i < chunks.Length; i++)
@@ -178,6 +178,18 @@ namespace BiRD
                 if (i % percentage == 0)
                     Thread.Sleep(1);
             }
+
+            Thread.Sleep(1);
+            // Send end frame
+            byte[] dat = new byte[]
+            {
+                100, // Start byte
+                id[0], // ID_1
+                id[1], // ID_2
+            };
+
+            // Send data to the endpoint using the socket connection.
+            sending_socket.SendTo(dat, ep);
         }
         #endregion
 

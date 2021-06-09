@@ -33,7 +33,7 @@ namespace BiRD
     public partial class PlayerWindow : Window
     {
         CommandTransmitter commandTransmitter = new CommandTransmitter();
-        string ClientIP = "127.0.0.1"; //"10.142.109.247"; // Kiwin
+        string ClientIP = "10.142.111.158"; // Hans
 
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
@@ -100,7 +100,7 @@ namespace BiRD
 
             // If new frame is recieved, then handle the data.
             string identifier = BitConverter.ToString(new byte[] { data[1], data[2] }).Replace("-", string.Empty);
-            if (headerInfo == 101)
+            if (headerInfo == 100)
             {
                 if (bufferFrame != null)
                 {
@@ -116,6 +116,10 @@ namespace BiRD
                         }
                     }
                 }
+            }
+            else if (headerInfo == 101)
+            {
+                
                 bufferFrame = new FrameData(data);
                 //HandleFrame();
                 // NOTE: Is this necessary?
