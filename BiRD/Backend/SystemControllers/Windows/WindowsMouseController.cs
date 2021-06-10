@@ -1,11 +1,12 @@
 ﻿using BifrostRemoteDesktop.Common.Models;
+using BiRD.Backend.SystemControllers.Interfaces;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace BifrostRemoteDesktop.Common.SystemControllers
 {
-    public class WindowsMouseController
+    public class WindowsMouseController: IMouseController
     {
         // Source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput
         const int MOUSEEVENTF_LEFTDOWN = 0x0002;
@@ -110,6 +111,16 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
 
             INPUT[] inputs = new INPUT[] { input };
             SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+        }
+
+        public void PressMiddleButton()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReleaseMiddleButton()
+        {
+            throw new NotImplementedException();
         }
     }
 }

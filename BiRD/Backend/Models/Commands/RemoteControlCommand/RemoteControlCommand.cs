@@ -2,7 +2,7 @@
 
 namespace BifrostRemoteDesktop.Common.Models.Commands
 {
-    public abstract class RemoteControlCommand<AssociatedArgumentType> : ICommand where AssociatedArgumentType : RemoteControlCommandArgs
+    public abstract class RemoteControlCommand<AssociatedArgumentType> : ICommand where AssociatedArgumentType : IRemoteControlCommandArgs
     {
         protected ISystemController SystemController { get; }
         protected AssociatedArgumentType Args { get; }
