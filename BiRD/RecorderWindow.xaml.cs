@@ -34,7 +34,7 @@ namespace BiRD
         //// Move mouse stuff.
         CommandReceiver commandReceiver = new CommandReceiver(new WindowsSystemController());
         #endregion
-        string ClientIP = "127.0.0.1"; // Lars
+        string ClientIP = "10.142.109.247"; // Lars
 
         Thread record;
         public RecorderWindow()

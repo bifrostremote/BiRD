@@ -19,13 +19,10 @@ namespace BifrostRemoteDesktop.Common.Models.Commands
                     SystemController.Mouse.PressLeftButton();
                     break;
                 case MouseActionType.RELEASE_LEFT_BTN:
-                    SystemController.Mouse.PressLeftButton();
+                    SystemController.Mouse.ReleaseLeftButton();
                     break;
                 case MouseActionType.PRESS_RIGHT_BTN:
-                    SystemController.Mouse.PressLeftButton();
-                    break;
-                case MouseActionType.RELEASE_RIGHT_BTN:
-                    SystemController.Mouse.PressLeftButton();
+                    SystemController.Mouse.ReleaseRightButton();
                     break;
                 default:
                     throw new NotImplementedException($"No action is implemented for argument {Args.ActionType} of type {nameof(MouseActionType)}");
