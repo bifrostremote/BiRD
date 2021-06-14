@@ -2,11 +2,8 @@
 using BifrostRemoteDesktop.WPF.Backend.Models.Commands;
 using BifrostRemoteDesktop.Common.Enums;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -15,17 +12,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using BifrostRemoteDesktop.Common.Models.Commands;
 using BiRD.Backend.Models.Commands.MouseActionCommand;
+using BiRD.Backend.Models.Commands;
 
 namespace BiRD
 {
@@ -444,7 +436,7 @@ namespace BiRD
                     {
                         return;
                     }
-                    
+
                     //var bitmap = (BitmapSource)new ImageSourceConverter().ConvertFrom(bitmapImage);
                     //ImageContainer.Source = bitmap;
                     //ImageContainer.Width = imageWidth;
@@ -525,6 +517,15 @@ namespace BiRD
                 new MouseActionCommandArgs()
                 {
                     ActionType = MouseActionType.RELEASE_RIGHT_BTN
+                });
+        }
+
+        private void ImageContainer_KeyDown(object sender, KeyEventArgs e)
+        {
+            commandTransmitter.SendCommand(CommandType.KeyboardInputCommand,
+                new KeyboardInputCommandArgs()
+                {
+                    Key = new KeyConverter().ConvertToString(e.Key).First()
                 });
         }
     }

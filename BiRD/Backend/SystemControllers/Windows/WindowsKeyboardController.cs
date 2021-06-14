@@ -7,7 +7,7 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
     public class WindowsKeyboardController : IKeyboardController
     {
 
-        [DllImport("user32.dll")] 
+        [DllImport("user32.dll")]
         static extern short VkKeyScan(char ch);
 
         [DllImport("user32.dll")]
@@ -15,7 +15,8 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
 
         public void PressKey(char key)
         {
-            //keybd_event(VkKeyScan(key));
+            byte VKKeyCode = Convert.ToByte(VkKeyScan(key));
+            keybd_event(VKKeyCode, 0, 0, 0);
         }
     }
 }

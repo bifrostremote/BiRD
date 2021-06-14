@@ -1,7 +1,7 @@
 ﻿using BifrostRemoteDesktop.Common.Models.Commands;
 using BifrostRemoteDesktop.Common.SystemControllers;
 
-namespace BifrostRemoteDesktop.WPF.Backend.Models.Commands.MovePointerPercentageCommand
+namespace BifrostRemoteDesktop.WPF.Backend.Models.Commands
 {
 
     public class MovePointerPercentCommand : RemoteControlCommand<MovePointerPercentageCommandArgs>

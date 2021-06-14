@@ -7,6 +7,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Image Name="ImageContainer" 
+               KeyDown="ImageContainer_KeyDown"
                MouseMove="ImageContainer_MouseMove" 
                MouseLeftButtonDown="ImageContainer_MouseLeftButtonDown"
                MouseLeftButtonUp="ImageContainer_MouseLeftButtonUp"
