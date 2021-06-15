@@ -18,7 +18,7 @@ namespace BiRD.Backend.Models.Commands
 
         public override void Execute()
         {
-            SystemController.Keyboard.PressKey(Args.Key);
+            SystemController.Keyboard.PressKey(Args.VKeyCode);
         }
     }
 }

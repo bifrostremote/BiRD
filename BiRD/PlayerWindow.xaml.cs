@@ -27,7 +27,7 @@ namespace BiRD
     public partial class PlayerWindow : Window
     {
         CommandTransmitter commandTransmitter = new CommandTransmitter();
-        string ClientIP = "10.142.111.158"; // Hans
+        string ClientIP = "10.142.104.91"; // Hans
 
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
@@ -35,6 +35,7 @@ namespace BiRD
         public PlayerWindow()
         {
             InitializeComponent();
+
             commandTransmitter.Connect(ClientIP);
             Thread thread = new Thread(new ThreadStart(MainProgram));
             thread.IsBackground = true;
@@ -525,7 +526,8 @@ namespace BiRD
             commandTransmitter.SendCommand(CommandType.KeyboardInputCommand,
                 new KeyboardInputCommandArgs()
                 {
-                    Key = new KeyConverter().ConvertToString(e.Key).First()
+
+                    VKeyCode = KeyInterop.VirtualKeyFromKey(e.Key)
                 });
         }
     }

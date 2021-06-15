@@ -15,8 +15,13 @@ namespace BifrostRemoteDesktop.Common.SystemControllers
 
         public void PressKey(char key)
         {
-            byte VKKeyCode = Convert.ToByte(VkKeyScan(key));
+            byte VKKeyCode = Convert.ToByte(VkKeyScan(char.ToLower(key)));
             keybd_event(VKKeyCode, 0, 0, 0);
+        }
+
+        public void PressKey(int vKeyCode)
+        {
+            keybd_event((byte)vKeyCode, 0, 0, 0);
         }
     }
 }
