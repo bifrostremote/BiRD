@@ -27,7 +27,7 @@ namespace BiRD
     public partial class PlayerWindow : Window
     {
         CommandTransmitter commandTransmitter = new CommandTransmitter();
-        string ClientIP = "10.142.111.158"; // Hans
+        string ClientIP = "10.142.109.247"; // Hans
 
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
