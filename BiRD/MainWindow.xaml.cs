@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiRD.Backend.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace BiRD
     {
         public MainWindow()
         {
+            BifrostAPI api = BifrostAPI.GetInstance();
+            api.Login("SuperAdmin", "EQF6cnG-jbVj~.t?@4RNr]A%");
+
+            api.GetMachine(new Guid("b2b985a8-67b5-428e-aace-0b479810f346"));
+
             InitializeComponent();
         }
 
