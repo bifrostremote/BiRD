@@ -526,7 +526,7 @@ namespace BiRD
             commandTransmitter.SendCommand(CommandType.KeyboardInputCommand,
                 new KeyboardInputCommandArgs()
                 {
-
+                    KeyIsDown = e.IsDown,
                     VKeyCode = KeyInterop.VirtualKeyFromKey(e.Key)
                 });
         }

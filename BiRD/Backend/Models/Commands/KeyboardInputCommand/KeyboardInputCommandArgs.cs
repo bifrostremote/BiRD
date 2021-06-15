@@ -5,5 +5,6 @@ namespace BiRD.Backend.Models.Commands
     public class KeyboardInputCommandArgs : RemoteControlCommandArgs
     {
         public int VKeyCode { get; set; }
+        public bool KeyIsDown { get; internal set; }
     }
 }

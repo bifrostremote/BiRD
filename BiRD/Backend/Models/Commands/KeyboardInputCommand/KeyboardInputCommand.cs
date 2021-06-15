@@ -18,7 +18,14 @@ namespace BiRD.Backend.Models.Commands
 
         public override void Execute()
         {
-            SystemController.Keyboard.PressKey(Args.VKeyCode);
+            if (Args.KeyIsDown)
+            {
+                SystemController.Keyboard.PressKey(Args.VKeyCode);
+            }
+            else
+            {
+                SystemController.Keyboard.ReleaseKey(Args.VKeyCode);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BiRD.Backend.SystemControllers.Interfaces
 {
     public interface IKeyboardController
     {
-        void PressKey(char key);
         void PressKey(int vKeyCode);
+        void ReleaseKey(int vKeyCode);
     }
 }
