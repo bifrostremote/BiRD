@@ -1,11 +1,15 @@
-﻿using System;
+﻿using BiRD.Backend.SystemControllers.Interfaces;
+using System;
 
 namespace BifrostRemoteDesktop.Common.SystemControllers
 {
     public class WindowsSystemController : ISystemController
     {
-        public WindowsMouseController Mouse { get; }
-        public WindowsKeyboardController Keyboard { get; }
+
+
+        public IMouseController Mouse { get; }
+
+        public IKeyboardController Keyboard { get; }
 
         public WindowsSystemController()
         {

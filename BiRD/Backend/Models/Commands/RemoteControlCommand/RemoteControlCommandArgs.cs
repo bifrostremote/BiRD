@@ -2,7 +2,8 @@
 
 namespace BifrostRemoteDesktop.Common.Models.Commands
 {
-    public abstract class RemoteControlCommandArgs
+
+    public abstract class RemoteControlCommandArgs: IRemoteControlCommandArgs
     {
         public override string ToString()
         {

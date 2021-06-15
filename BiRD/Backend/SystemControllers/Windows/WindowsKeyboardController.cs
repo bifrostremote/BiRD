@@ -1,9 +1,10 @@
-﻿using System;
+﻿using BiRD.Backend.SystemControllers.Interfaces;
+using System;
 using System.Runtime.InteropServices;
 
 namespace BifrostRemoteDesktop.Common.SystemControllers
 {
-    public class WindowsKeyboardController
+    public class WindowsKeyboardController : IKeyboardController
     {
 
         [DllImport("user32.dll")] 
