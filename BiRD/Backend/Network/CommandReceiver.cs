@@ -14,7 +14,7 @@ namespace BifrostRemoteDesktop.Common.Network
 
     public class CommandReceiver
     {
-        private ISystemController _systemController;
+        private readonly ISystemController _systemController;
         private Thread thread;
 
 
@@ -66,7 +66,7 @@ namespace BifrostRemoteDesktop.Common.Network
                         while (TryFindAndRemoveNextPackage(ref data, out string package))
                         {
                             ICommand command = ParseCommandFromPackage(
-                                commandReceiver, package);
+                                commandReceiver._systemController, package);
                             command.Execute();
                         }
 
@@ -97,7 +97,7 @@ namespace BifrostRemoteDesktop.Common.Network
 
             if (endCharIndex == -1)
             {
-                package = string.Empty;
+                package = string.Empty; 
                 return false;
             }
 
@@ -107,7 +107,7 @@ namespace BifrostRemoteDesktop.Common.Network
             return true;
         }
 
-        public static ICommand ParseCommandFromPackage(CommandReceiver commandReceiver, string package)
+        public static ICommand ParseCommandFromPackage(ISystemController systemController, string package)
         {
             string[] parts = package.Split(TransmissionContext.TEXT_SEGMENTATION_CHAR);
 
@@ -120,7 +120,7 @@ namespace BifrostRemoteDesktop.Common.Network
             {
                 TypeNameHandling = TypeNameHandling.All
             });
-            ICommand command = CommandFactory.CreateCommand(commandType, commandArgs, commandReceiver._systemController);
+            ICommand command = CommandFactory.CreateCommand(commandType, commandArgs, systemController);
             return command;
         }
     }
