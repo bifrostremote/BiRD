@@ -21,10 +21,10 @@ namespace BiRD.Backend.Models.Commands
         {
             switch (Args.KeyStateCode)
             {
-                case KeyboardInputCommandArgs.KEY_STATE_CODE_UP:
+                case KeyboardInputCommandArgs.KEY_STATE_CODE_DOWN:
                     SystemController.Keyboard.PressKey(Args.VKeyCode);
                     break;
-                case KeyboardInputCommandArgs.KEY_STATE_CODE_DOWN:
+                case KeyboardInputCommandArgs.KEY_STATE_CODE_UP:
                     SystemController.Keyboard.ReleaseKey(Args.VKeyCode);
                     break;
                 default:

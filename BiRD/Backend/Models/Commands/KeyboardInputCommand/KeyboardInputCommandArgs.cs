@@ -9,6 +9,6 @@ namespace BiRD.Backend.Models.Commands
         public const int KEY_STATE_CODE_DOWN = 1;
 
         public int VKeyCode { get; set; }
-        public int KeyStateCode { get; internal set; }
+        public int KeyStateCode { get; set; }
     }
 }
