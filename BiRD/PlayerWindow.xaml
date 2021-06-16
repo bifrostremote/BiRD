@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        KeyDown="ImageContainer_KeyDown">
+        KeyDown="ImageContainer_KeyDown"
+         KeyUp="ImageContainer_KeyUp">
     <Grid>
         <Image Name="ImageContainer"
         MouseMove="ImageContainer_MouseMove"

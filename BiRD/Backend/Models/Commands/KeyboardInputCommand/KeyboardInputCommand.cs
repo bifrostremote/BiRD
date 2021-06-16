@@ -10,6 +10,7 @@ namespace BiRD.Backend.Models.Commands
 {
     public class KeyboardInputCommand : RemoteControlCommand<KeyboardInputCommandArgs>
     {
+
         public KeyboardInputCommand(
             ISystemController systemController, KeyboardInputCommandArgs args) : base(systemController, args)
         {
@@ -18,13 +19,16 @@ namespace BiRD.Backend.Models.Commands
 
         public override void Execute()
         {
-            if (Args.KeyIsDown)
+            switch (Args.KeyStateCode)
             {
-                SystemController.Keyboard.PressKey(Args.VKeyCode);
-            }
-            else
-            {
-                SystemController.Keyboard.ReleaseKey(Args.VKeyCode);
+                case KeyboardInputCommandArgs.KEY_STATE_CODE_UP:
+                    SystemController.Keyboard.PressKey(Args.VKeyCode);
+                    break;
+                case KeyboardInputCommandArgs.KEY_STATE_CODE_DOWN:
+                    SystemController.Keyboard.ReleaseKey(Args.VKeyCode);
+                    break;
+                default:
+                    throw new ArgumentException("Unexpected key state code.");
             }
         }
     }

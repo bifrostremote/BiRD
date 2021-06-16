@@ -526,7 +526,17 @@ namespace BiRD
             commandTransmitter.SendCommand(CommandType.KeyboardInputCommand,
                 new KeyboardInputCommandArgs()
                 {
-                    KeyIsDown = e.IsDown,
+                    KeyStateCode = KeyboardInputCommandArgs.KEY_STATE_CODE_DOWN,
+                    VKeyCode = KeyInterop.VirtualKeyFromKey(e.Key)
+                });
+        }
+
+        private void ImageContainer_KeyUp(object sender, KeyEventArgs e)
+        {
+            commandTransmitter.SendCommand(CommandType.KeyboardInputCommand,
+                new KeyboardInputCommandArgs()
+                {
+                    KeyStateCode = KeyboardInputCommandArgs.KEY_STATE_CODE_UP,
                     VKeyCode = KeyInterop.VirtualKeyFromKey(e.Key)
                 });
         }
