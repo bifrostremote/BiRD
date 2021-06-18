@@ -1,4 +1,5 @@
 ﻿using BifrostApi.Models;
+using BifrostApi.Models.DTO;
 using BiRD.Backend.API.RequestBuilder;
 using BiRD.Backend.Enums;
 using BiRD.Backend.Models.API.Response;
@@ -21,6 +22,7 @@ namespace BiRD.Backend.API
         private CookieContainer _cookies;
         private static BifrostAPI _cachedInstance = null;
         public event EventHandler ResponseMessageRecieved;
+        private bool _useTestServer = false;
         public class ResponseMessageReceivedArgs : EventArgs
         {
             public string Message;
@@ -39,9 +41,19 @@ namespace BiRD.Backend.API
                 return _cachedInstance;
         }
 
-        public bool Login(string username, string password)
+        public void UseTestServer()
         {
-            BifrostBuilder builder = new BifrostBuilder(true, 5001);
+            _useTestServer = true;
+        }
+
+        public void UseLiveServer()
+        {
+            _useTestServer = false;
+        }
+
+        public string Login(string username, string password)
+        {
+            BifrostBuilder builder = new BifrostBuilder(_useTestServer, 5001);
             CookieContainer cookieJar = new CookieContainer();
 
             builder.SetEndpoint("Auth/Authenticate");
@@ -60,10 +72,79 @@ namespace BiRD.Backend.API
             {
                 _cookies = request.CookieContainer;
 
-                return true;
+                return response.ResponseBody;
             }
 
-            return false;
+            return "";
+        }
+
+        public string GenerateWordToken(TokenPairDTO dto)
+        {
+            BifrostBuilder builder = new BifrostBuilder(_useTestServer, 5001);
+            CookieContainer cookieJar = new CookieContainer();
+
+            builder.SetEndpoint("Token/Word");
+            builder.SetEncryption(Encryption.https);
+
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(builder.GetRequest().ToString());
+
+            request.Method = "POST";
+            request.CookieContainer = cookieJar;
+
+            // prepare data for transmission
+            string data = JsonConvert.SerializeObject(dto);
+
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] bytes = encoding.GetBytes(data);
+
+            request.ContentType = "application/json";
+            request.ContentLength = bytes.Length;
+
+            // Prepare to write data.
+            Stream stream = request.GetRequestStream();
+
+            // Write data to request body
+            stream.Write(bytes, 0, bytes.Length);
+
+            stream.Close();
+
+
+            BaseResponse response = ReadResponse(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                _cookies = request.CookieContainer;
+
+                return response.ResponseBody;
+            }
+
+            return "";
+        }
+
+        public string GetMachineIp(string token)
+        {
+            BifrostBuilder builder = new BifrostBuilder(_useTestServer, 5001);
+            CookieContainer cookieJar = new CookieContainer();
+
+            builder.SetEndpoint("Token");
+            builder.SetEncryption(Encryption.https);
+            builder.AddParameter("token", token);
+
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(builder.GetRequest().ToString());
+
+            request.Method = "GET";
+            request.CookieContainer = cookieJar;
+
+            BaseResponse response = ReadResponse(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                _cookies = request.CookieContainer;
+
+                return response.ResponseBody;
+            }
+
+            return "";
         }
 
         public void Logout()
@@ -72,10 +153,10 @@ namespace BiRD.Backend.API
             _cookies = null;
         }
 
-        public List<Machine> GetMachine(Guid userUid)
+        public List<Machine> GetMachines(Guid userUid)
         {
 
-            BifrostBuilder builder = new BifrostBuilder(true, 5001);
+            BifrostBuilder builder = new BifrostBuilder(_useTestServer, 5001);
 
             builder.SetEndpoint("Machine");
             builder.SetEncryption(Encryption.https);

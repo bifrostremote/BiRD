@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Backend\Models\API\DTO\" />
+    <Folder Include="UI\" />
   </ItemGroup>
 
 </Project>
