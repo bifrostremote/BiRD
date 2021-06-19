@@ -4,6 +4,7 @@
     {
         MovePointer,
         MouseAction,
-        MovePointerPercentage
+        MovePointerPercentage,
+        KeyboardInputCommand
     }
 }

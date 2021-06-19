@@ -2,7 +2,7 @@
 using BifrostRemoteDesktop.Common.Models.Commands;
 using BifrostRemoteDesktop.Common.SystemControllers;
 using BifrostRemoteDesktop.WPF.Backend.Models.Commands;
-using BifrostRemoteDesktop.WPF.Backend.Models.Commands.MovePointerPercentageCommand;
+using BiRD.Backend.Models.Commands;
 using System;
 
 namespace BifrostRemoteDesktop.Common.Factories
@@ -25,6 +25,10 @@ namespace BifrostRemoteDesktop.Common.Factories
                 case CommandType.MovePointerPercentage:
                     {
                         return new MovePointerPercentCommand(systemController, (MovePointerPercentageCommandArgs)commandArgs);
+                    }
+                case CommandType.KeyboardInputCommand:
+                    {
+                        return new KeyboardInputCommand(systemController, (KeyboardInputCommandArgs)commandArgs);
                     }
                 default:
                     {

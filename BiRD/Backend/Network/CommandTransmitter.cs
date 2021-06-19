@@ -20,6 +20,11 @@ namespace BifrostRemoteDesktop.Common.Network
         public event EventHandler NoReceiverFound;
         public event EventHandler ConnectionEstablished;
 
+        ~CommandTransmitter()
+        {
+            Disconnect();
+        }
+
         public bool SendCommand(CommandType type, IRemoteControlCommandArgs commandArgs)
         {
             string[] packageParts = new string[] {
