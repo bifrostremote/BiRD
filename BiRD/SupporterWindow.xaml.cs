@@ -33,7 +33,7 @@ namespace BiRD
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
 
-        public SupporterWindow(string ip)
+        public SupporterWindow(string ip, string localhost)
         {
             InitializeComponent();
             ClientIP = ip;

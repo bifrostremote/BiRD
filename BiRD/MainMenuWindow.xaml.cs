@@ -174,7 +174,7 @@ namespace BiRD
                 return;
             }
 
-            SupporterWindow supporterWindow = new SupporterWindow(ip);
+            SupporterWindow supporterWindow = new SupporterWindow(ip, cmb_supporter_addresses.SelectedItem.ToString());
             supporterWindow.Show();
         }
         #endregion
