@@ -47,6 +47,7 @@ namespace BiRD
         {
             Environment.Exit(Environment.ExitCode); // Prevent memory leak
                                                     // System.Windows.Application.Current.Shutdown(); // Not sure if needed
+            commandReceiver.Stop();
         }
 
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
@@ -288,6 +289,7 @@ namespace BiRD
         private void Stop_Streaming(object sender, RoutedEventArgs e)
         {
             loop = false;
+            commandReceiver.Stop();
         }
 
         private void UpdateImage(Bitmap bitmap)
@@ -341,6 +343,11 @@ namespace BiRD
 
                 //}
             });
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BiRD.Backend.API
 {
@@ -179,38 +180,110 @@ namespace BiRD.Backend.API
             return new List<Machine>();
         }
 
+        public Guid EnrollMachine(MachineCreateDTO dto)
+        {
+            BifrostBuilder builder = new BifrostBuilder(_useTestServer, 5001);
+            CookieContainer cookieJar = new CookieContainer();
+
+            builder.SetEndpoint("Machine");
+            builder.SetEncryption(Encryption.https);
+
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(builder.GetRequest().ToString());
+
+            request.Method = "POST";
+            request.CookieContainer = cookieJar;
+
+            // prepare data for transmission
+            string data = JsonConvert.SerializeObject(dto);
+
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] bytes = encoding.GetBytes(data);
+
+            request.ContentType = "application/json";
+            request.ContentLength = bytes.Length;
+
+            // Prepare to write data.
+            Stream stream = request.GetRequestStream();
+
+            // Write data to request body
+            stream.Write(bytes, 0, bytes.Length);
+
+            stream.Close();
+
+
+            BaseResponse response = ReadResponse(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                _cookies = request.CookieContainer;
+
+                return new Guid(response.ResponseBody);
+            }
+
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                throw new ArgumentException(response.ResponseBody);
+            }
+
+            return Guid.Empty;
+
+        }
+
         private BaseResponse ReadResponse(WebRequest request)
         {
             string responseFromAPI = "";
             BaseResponse resp = new BaseResponse();
 
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                var headerkeys = response.Headers.AllKeys;
-
-                for (int i = 0; i < headerkeys.Length; i++)
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    var keyvalue = new KeyValuePair<string, string>(headerkeys[i], response.Headers.GetValues(i).FirstOrDefault());
+                    var headerkeys = response.Headers.AllKeys;
 
-                    resp.Headers.Add(keyvalue);
+                    for (int i = 0; i < headerkeys.Length; i++)
+                    {
+                        var keyvalue = new KeyValuePair<string, string>(headerkeys[i], response.Headers.GetValues(i).FirstOrDefault());
+
+                        resp.Headers.Add(keyvalue);
+                    }
+
+                    resp.StatusCode = response.StatusCode;
+                    resp.ResponseBody = GetResponse(response);
+
+
                 }
+            }
+            catch (WebException wex)
+            {
+                var response = (HttpWebResponse)wex.Response;
+                if (response == null)
+                    return resp;
 
+                resp.ResponseBody = GetResponse(response);
                 resp.StatusCode = response.StatusCode;
+            }
+            return resp;
+        }
 
+        private string GetResponse(HttpWebResponse response)
+        {
+            string message = "";
+            if (response != null)
+            {
                 using (var datastream = response.GetResponseStream())
                 {
                     if (datastream != null)
                     {
                         using (var reader = new StreamReader(datastream))
                         {
-                            resp.ResponseBody = reader.ReadToEnd();
+                            message = reader.ReadToEnd();
                         }
                         datastream.Close();
                     }
                 }
+
             }
-            return resp;
+            return message;
         }
     }
 }

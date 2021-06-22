@@ -34,7 +34,7 @@ namespace BiRD
 
         private void Start_Support_Click(object sender, RoutedEventArgs e)
         {
-            PlayerWindow playerWindow = new PlayerWindow();
+            PlayerWindow playerWindow = new PlayerWindow("10.142.111.158");
             playerWindow.Show();
         }
     }

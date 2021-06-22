@@ -40,9 +40,10 @@ namespace BiRD
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
 
-        public PlayerWindow()
+        public PlayerWindow(string ip)
         {
             InitializeComponent();
+            ClientIP = ip;
             commandTransmitter.Connect(ClientIP);
             Thread thread = new Thread(new ThreadStart(MainProgram));
             thread.IsBackground = true;

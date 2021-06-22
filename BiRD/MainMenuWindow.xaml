@@ -15,50 +15,54 @@
             <TabItem Header="Login" x:Name="LoginPage">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="61*" />
+                        <ColumnDefinition Width="336*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="lbl_username" Content="Username" HorizontalAlignment="Center" Margin="0,50,200,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
-                    <TextBox x:Name="txtbox_username" HorizontalAlignment="Center" Margin="0,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="20" Grid.Column="1"/>
-                    <Label x:Name="lbl_Password" Content="Password" HorizontalAlignment="Center" Margin="0,111,200,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
-                    <TextBox x:Name="txtbox_password" HorizontalAlignment="Center" Margin="0,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="20" Grid.Column="1"/>
-                    <CheckBox x:Name="check_usetestserver" Content="Use testserver" HorizontalAlignment="Center" Margin="0,196,180,0" VerticalAlignment="Top" FontSize="15" FontWeight="Normal" Grid.Column="1"/>
-                    <Label x:Name="lbl_incorrectlogin" Content="Username or password was incorrect" HorizontalAlignment="Center" Margin="0,225,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFEA0F0F" Visibility="Hidden"/>
-                    <Button Content="Login" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" FontSize="25" Click="Login_Click" Grid.Column="1"/>
+                    <Label x:Name="lbl_username" Content="Username" HorizontalAlignment="Left" Margin="126,50,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                    <TextBox x:Name="txtbox_username" HorizontalAlignment="Left" Margin="125,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="20" Grid.Column="1"/>
+                    <Label x:Name="lbl_Password" Content="Password" HorizontalAlignment="Left" Margin="129,111,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                    <TextBox x:Name="txtbox_password" HorizontalAlignment="Left" Margin="125,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="20" Grid.Column="1"/>
+                    <CheckBox x:Name="check_usetestserver" Content="Use testserver" HorizontalAlignment="Left" Margin="129,196,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Normal" Grid.Column="1"/>
+                    <Label x:Name="lbl_incorrectlogin" Content="Username or password was incorrect" HorizontalAlignment="Left" Margin="108,225,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFEA0F0F" Visibility="Hidden" Grid.Column="1"/>
+                    <Button Content="Login" HorizontalAlignment="Left" Margin="242,0,0,20" VerticalAlignment="Bottom" FontSize="25" Click="Login_Click" Grid.Column="1"/>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Client" IsEnabled="False" x:Name="ClientPage" GotFocus="ClientPage_LoadMachine">
+            <TabItem Header="Client" IsEnabled="False" x:Name="ClientPage">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="111*" />
+                        <ColumnDefinition Width="683*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="lbl_Token" Content="TokenPlaceHolder" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="40" Margin="0,0,0,0"/>
-                    <ComboBox x:Name="cmb_machines" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="200" FontSize="20" 
-                              ItemsSource="{Binding Source=AvailableMachines, Mode=TwoWay}" 
+                    <Label x:Name="lbl_Token" Content="" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" Margin="123,0,0,0"/>
+                    <ComboBox x:Name="cmb_machines" HorizontalAlignment="Left" Margin="186,115,0,0" VerticalAlignment="Top" Width="200" FontSize="20" 
                               DisplayMemberPath="Name"
-                              SelectedValue="{Binding Path=SelectedMachine}"
                               Grid.Column="1"/>
                     <Button x:Name="btn_GenerateToken" Content="Generate Token" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" FontSize="25" Click="Generatetoken_click"/>
-                    <Button x:Name="btn_GenerateToken_Copy" Content="Open remote desktop" HorizontalAlignment="Right" Margin="0,0,40,40" VerticalAlignment="Bottom" FontSize="25" Grid.Column="1"/>
-                    <Label Content="Machine" HorizontalAlignment="Center" Margin="0,72,0,0" VerticalAlignment="Top" FontSize="25" Grid.Column="1"/>
+                    <Button x:Name="btn_OpenRemote" Content="Open remote desktop" HorizontalAlignment="Right" Margin="0,0,40,40" VerticalAlignment="Bottom" FontSize="25" Grid.Column="1" Click="btn_OpenRemote_Click"/>
+                    <Label Content="Machine" HorizontalAlignment="Left" Margin="234,72,0,0" VerticalAlignment="Top" FontSize="25" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Supporter" IsEnabled="False" x:Name="SupportPage">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtbox_SupporterToken" HorizontalAlignment="Center" Margin="0,50,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="363" FontSize="35"/>
-                    <Label x:Name="lbl_" Content="Insert token" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="20"/>
-                    <Button x:Name="btn_Connect" Content="Connect" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" FontSize="25"/>
+                    <TextBox x:Name="txtbox_SupporterToken" HorizontalAlignment="Center" Margin="0,50,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="362" FontSize="35" Grid.Column="1"/>
+                    <Label x:Name="lbl_InsertToken" Content="Insert token" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                    <Button x:Name="btn_Connect" Content="Connect" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" FontSize="25" Click="btn_connect_click" Grid.Column="1"/>
+                    <Label x:Name="lbl_incorrectToken" Content="Token was incorrect" HorizontalAlignment="Left" Margin="227,104,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFE02020" Visibility="Collapsed" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Enroll" IsEnabled="False" x:Name="EnrollMachinePage">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Enroll Machine" HorizontalAlignment="Center" Margin="0,0,0,15" VerticalAlignment="Bottom" FontSize="25"/>
+                    <Button x:Name="btn_Enroll" Content="Enroll Machine" HorizontalAlignment="Center" Margin="0,0,0,15" VerticalAlignment="Bottom" FontSize="25" Click="btn_Enroll_Click" Grid.Column="1"/>
+                    <ComboBox x:Name="cmb_addresses" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="200" FontSize="20" 
+                        Grid.Column="1"/>
+                    <Label x:Name="lbl_ipaddresses" Content="IP addresses" HorizontalAlignment="Center" Margin="4,72,0,0" VerticalAlignment="Top" FontSize="25" Grid.Column="1"/>
 
 
                 </Grid>

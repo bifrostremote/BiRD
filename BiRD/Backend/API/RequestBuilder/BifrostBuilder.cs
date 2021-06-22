@@ -15,7 +15,7 @@ namespace BiRD.Backend.API.RequestBuilder
             else
                 _baseURL = "localhost";
 
-            if (port != 0)
+            if (useTestEndpoint && port != 0)
                 _port = port; 
         }
     }
