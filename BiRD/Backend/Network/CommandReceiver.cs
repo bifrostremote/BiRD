@@ -60,7 +60,7 @@ namespace BifrostRemoteDesktop.Common.Network
             if (thread != null && thread.IsAlive)
             {
                 tcpListener.Stop();
-                thread.Join();
+                thread.Interrupt();
             }
         }
 

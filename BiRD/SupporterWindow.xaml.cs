@@ -29,6 +29,8 @@ namespace BiRD
     {
         CommandTransmitter commandTransmitter = new CommandTransmitter();
         string ClientIP = "127.0.0.1";
+        Thread mainThread;
+        UdpClient udpServer;
 
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
@@ -38,9 +40,9 @@ namespace BiRD
             InitializeComponent();
             ClientIP = ip;
             commandTransmitter.Connect(ClientIP);
-            Thread thread = new Thread(new ThreadStart(MainProgram));
-            thread.IsBackground = true;
-            thread.Start();
+            mainThread = new Thread(new ThreadStart(MainProgram));
+            mainThread.IsBackground = true;
+            mainThread.Start();
 
             // Send connect request via tcp
             commandTransmitter.SendCommand(CommandType.ConnectionRequest,
@@ -53,6 +55,8 @@ namespace BiRD
 
         private void Window_Closing(object sender, EventArgs e)
         {
+            udpServer.Close();
+            mainThread.Interrupt();
             // Send connect request via tcp
             commandTransmitter.SendCommand(CommandType.ConnectionRequest,
                 new ConnectionRequestCommandArgs()
@@ -67,7 +71,7 @@ namespace BiRD
         void MainProgram()
         {
             //Console.WriteLine("Hello World!");
-            UdpClient udpServer = new UdpClient(11000);
+            udpServer = new UdpClient(11000);
             while (true)
             {
                 var remoteEP = new IPEndPoint(IPAddress.Any, 11000);

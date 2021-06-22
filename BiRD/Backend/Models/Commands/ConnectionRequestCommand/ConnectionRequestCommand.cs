@@ -25,10 +25,7 @@ namespace BiRD.Backend.Models.Commands
             if (Args.StreamRunning)
                 ((ClientWindow)obj).Start_Streaming();
             else
-            {
-                ((ClientWindow)obj).Stop_Streaming();
                 ((ClientWindow)obj).CloseWinow();
-            }
         }
     }
 }

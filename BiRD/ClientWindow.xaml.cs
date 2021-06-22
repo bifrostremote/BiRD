@@ -35,6 +35,7 @@ namespace BiRD
         #endregion
         public string ClientIP = "127.0.0.1";
         int QualityPercetn = 15;
+        ClientWindow _thisWindow;
 
         Thread record;
         public ClientWindow()
@@ -42,6 +43,7 @@ namespace BiRD
             InitializeComponent();
             commandReceiver.ParseWindow(this);
             commandReceiver.Start();
+            _thisWindow = this;
         }
 
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
@@ -51,10 +53,10 @@ namespace BiRD
 
         public void CloseWinow()
         {
+            loop = false;
             commandReceiver.Stop();
             DeleteObject(commandReceiver);
-            Environment.Exit(Environment.ExitCode); // Prevent memory leak
-            //System.Windows.Application.Current.Shutdown(); // Not sure if needed
+            Environment.Exit(Environment.ExitCode);
         }
 
         #region Compare frame code
@@ -90,8 +92,13 @@ namespace BiRD
         #region Send data
         public void SendByteStrean(byte[][] chunks, int dataLen, int imageWidth, int imageHeight, string ip, int port)
         {
-            // Create the endpoint the the udp connection will use.
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
+            IPEndPoint ep;
+            try
+            {
+                // Create the endpoint the the udp connection will use.
+                ep = new IPEndPoint(IPAddress.Parse(ip), port);
+            }
+            catch (Exception) { return; }
 
             // Create a new socket.
             Socket sending_socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
