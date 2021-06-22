@@ -70,7 +70,10 @@ namespace BiRD
 
             cmb_machines.ItemsSource = machines;
 
-            cmb_addresses.ItemsSource = GetIpAddresses();
+            var addresses = GetIpAddresses();
+
+            cmb_addresses.ItemsSource = addresses;
+            cmb_addresses.SelectedItem = addresses.First();
 
             //_availableMachines = new ObservableCollection<Machine>(machines);
         }
@@ -188,6 +191,8 @@ namespace BiRD
                 };
 
                 Guid newMachine = _api.EnrollMachine(machine);
+
+                ClientPage_LoadMachine(this, null);
 
             }
             catch (ArgumentException ex)

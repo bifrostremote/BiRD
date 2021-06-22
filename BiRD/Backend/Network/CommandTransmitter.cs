@@ -77,7 +77,7 @@ namespace BifrostRemoteDesktop.Common.Network
             {
                 _tcp.Connect(remoteHostname, port: TransmissionContext.INPUT_TCP_PORT);
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
                 Debug.WriteLine("No receiver available.");
                 NoReceiverFound?.Invoke(this, EventArgs.Empty);

@@ -39,7 +39,7 @@ namespace BiRD
         Thread record;
         public RecorderWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
             commandReceiver.Start();
         }
         
@@ -97,10 +97,10 @@ namespace BiRD
         public int GetPercentage()
         {
             int progress = 0;
-            Application.Current.Dispatcher.Invoke(
-                DispatcherPriority.Normal,
-                (ThreadStart)delegate { progress = (int)Percentage_Sleep.Value; }
-            );
+            //Application.Current.Dispatcher.Invoke(
+            //    DispatcherPriority.Normal,
+            //    (ThreadStart)delegate { progress = (int)Percentage_Sleep.Value; }
+            //);
             // Default to 10000 if value is 0;
             if (progress == 0)
                 progress = 10000;
@@ -252,7 +252,7 @@ namespace BiRD
                 SendByteStrean(chunks, bitByte.Length, bitmap.Width, bitmap.Height, ClientIP, 11000); //"10.142.112.247"
 
 
-                UpdateImage(bitmap);
+                //UpdateImage(bitmap);
             }
         }
 
@@ -270,33 +270,33 @@ namespace BiRD
             commandReceiver.Stop();
         }
 
-        private void UpdateImage(Bitmap bitmap)
-        {
-            Dispatcher.Invoke(() => {
+        //private void UpdateImage(Bitmap bitmap)
+        //{
+        //    Dispatcher.Invoke(() => {
 
-                // Display crap.
-                IntPtr handle = IntPtr.Zero;
-                try
-                {
-                    handle = bitmap.GetHbitmap();
-                    ImageControl.Source = Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty,
-                        BitmapSizeOptions.FromEmptyOptions());
-                }
-                catch (Exception)
-                {
+        //        // Display crap.
+        //        IntPtr handle = IntPtr.Zero;
+        //        try
+        //        {
+        //            handle = bitmap.GetHbitmap();
+        //            //ImageControl.Source = Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty,
+        //                BitmapSizeOptions.FromEmptyOptions());
+        //        }
+        //        catch (Exception)
+        //        {
 
-                }
+        //        }
 
-                finally
-                {
-                    DeleteObject(handle);
-                }
-            });
-        }
+        //        finally
+        //        {
+        //            DeleteObject(handle);
+        //        }
+        //    });
+        //}
 
-        private void Window_Closed(object sender, EventArgs e)
-        {
+        //private void Window_Closed(object sender, EventArgs e)
+        //{
 
-        }
+        //}
     }
 }
