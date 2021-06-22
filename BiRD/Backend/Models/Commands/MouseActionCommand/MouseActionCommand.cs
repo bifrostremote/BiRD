@@ -22,6 +22,9 @@ namespace BifrostRemoteDesktop.Common.Models.Commands
                     SystemController.Mouse.ReleaseLeftButton();
                     break;
                 case MouseActionType.PRESS_RIGHT_BTN:
+                    SystemController.Mouse.PressRightButton();
+                    break;
+                case MouseActionType.RELEASE_RIGHT_BTN:
                     SystemController.Mouse.ReleaseRightButton();
                     break;
                 default:
