@@ -44,15 +44,18 @@ namespace BiRD
             commandReceiver.Start();
         }
 
-        private void OnWindowclose(object sender, EventArgs e)
-        {
-            Environment.Exit(Environment.ExitCode); // Prevent memory leak
-            //System.Windows.Application.Current.Shutdown(); // Not sure if needed
-            commandReceiver.Stop();
-        }
-
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr onj);
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(CommandReceiver onj);
+
+        public void CloseWinow()
+        {
+            commandReceiver.Stop();
+            DeleteObject(commandReceiver);
+            Environment.Exit(Environment.ExitCode); // Prevent memory leak
+            //System.Windows.Application.Current.Shutdown(); // Not sure if needed
+        }
 
         #region Compare frame code
         byte[] previousFrame;
@@ -224,7 +227,7 @@ namespace BiRD
             record.Start();
         }
 
-        private void Stop_Streaming(object sender, RoutedEventArgs e)
+        public void Stop_Streaming()
         {
             loop = false;
             commandReceiver.Stop();

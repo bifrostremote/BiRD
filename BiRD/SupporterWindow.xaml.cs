@@ -46,30 +46,21 @@ namespace BiRD
             commandTransmitter.SendCommand(CommandType.ConnectionRequest,
                 new ConnectionRequestCommandArgs()
                 {
-                    IP = ClientIP,
+                    IP = localhost,
                     StreamRunning = true
-                }); ;
+                });
         }
 
-        //private static List<string> GetIpAddresses()
-        //{
-        //    var host = Dns.GetHostEntry(Dns.GetHostName());
-        //    List<string> addresses = new List<string>();
-
-        //    foreach (var ip in host.AddressList)
-        //    {
-        //        if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-        //        {
-        //            addresses.Add(ip.ToString());
-        //        }
-        //    }
-
-        //    return addresses;
-        //}
-
-        private void OnWindowclose(object sender, EventArgs e)
+        private void Window_Closing(object sender, EventArgs e)
         {
-            Environment.Exit(Environment.ExitCode); // Prevent memory leak
+            // Send connect request via tcp
+            commandTransmitter.SendCommand(CommandType.ConnectionRequest,
+                new ConnectionRequestCommandArgs()
+                {
+                    IP = "",
+                    StreamRunning = false
+                });
+            //Environment.Exit(Environment.ExitCode); // Prevent memory leak
             //System.Windows.Application.Current.Shutdown(); // Not sure if needed
         }
 

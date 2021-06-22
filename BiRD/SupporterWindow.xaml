@@ -6,7 +6,8 @@
         mc:Ignorable="d"
         Title="SupporterWindow" Height="450" Width="800"
         KeyDown="ImageContainer_KeyDown"
-         KeyUp="ImageContainer_KeyUp">
+         KeyUp="ImageContainer_KeyUp"
+        Closing="Window_Closing">
     <Grid>
         <Image Name="ImageContainer"
         MouseMove="ImageContainer_MouseMove"

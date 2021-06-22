@@ -22,7 +22,13 @@ namespace BiRD.Backend.Models.Commands
         {
             ((ClientWindow)obj).ClientIP = Args.IP;
 
-            ((ClientWindow)obj).Start_Streaming();
+            if (Args.StreamRunning)
+                ((ClientWindow)obj).Start_Streaming();
+            else
+            {
+                ((ClientWindow)obj).Stop_Streaming();
+                ((ClientWindow)obj).CloseWinow();
+            }
         }
     }
 }
