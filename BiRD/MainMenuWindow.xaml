@@ -48,7 +48,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtbox_SupporterToken" HorizontalAlignment="Center" Margin="0,50,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="362" FontSize="35" Grid.Column="1"/>
+                    <TextBox x:Name="txtbox_SupporterToken" HorizontalAlignment="Center" Margin="0,50,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="362" FontSize="35" Grid.Column="1"/>
                     <Label x:Name="lbl_InsertToken" Content="Insert token" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
                     <Button x:Name="btn_Connect" Content="Connect" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" FontSize="25" Click="btn_connect_click" Grid.Column="1"/>
                     <Label x:Name="lbl_incorrectToken" Content="Token was incorrect" HorizontalAlignment="Left" Margin="227,104,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFE02020" Visibility="Collapsed" Grid.Column="1"/>
