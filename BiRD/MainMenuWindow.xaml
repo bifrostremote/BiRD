@@ -52,6 +52,8 @@
                     <Label x:Name="lbl_InsertToken" Content="Insert token" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
                     <Button x:Name="btn_Connect" Content="Connect" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" FontSize="25" Click="btn_connect_click" Grid.Column="1"/>
                     <Label x:Name="lbl_incorrectToken" Content="Token was incorrect" HorizontalAlignment="Left" Margin="227,104,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFE02020" Visibility="Collapsed" Grid.Column="1"/>
+                    <Label x:Name="lbl_supporter_ipaddresses" Content="IP addresses" HorizontalAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" FontSize="25"/>
+                    <ComboBox x:Name="cmb_supporter_addresses" HorizontalAlignment="Center" Margin="0,169,0,0" VerticalAlignment="Top" Width="200" FontSize="20"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Enroll" IsEnabled="False" x:Name="EnrollMachinePage">

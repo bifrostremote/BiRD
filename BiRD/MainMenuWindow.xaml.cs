@@ -73,7 +73,11 @@ namespace BiRD
             var addresses = GetIpAddresses();
 
             cmb_addresses.ItemsSource = addresses;
-            cmb_addresses.SelectedItem = addresses.First();
+            cmb_addresses.SelectedIndex = 0;
+
+            cmb_supporter_addresses.ItemsSource = addresses;
+            cmb_supporter_addresses.SelectedIndex = 0;
+           
 
             //_availableMachines = new ObservableCollection<Machine>(machines);
         }
