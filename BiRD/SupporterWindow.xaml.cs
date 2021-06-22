@@ -31,6 +31,7 @@ namespace BiRD
         string ClientIP = "127.0.0.1";
         Thread mainThread;
         UdpClient udpServer;
+        bool shouldRecieve = true;
 
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
@@ -55,8 +56,11 @@ namespace BiRD
 
         private void Window_Closing(object sender, EventArgs e)
         {
-            udpServer.Close();
+            shouldRecieve = false;
             mainThread.Interrupt();
+            udpServer.Client.Shutdown(SocketShutdown.Receive);
+            udpServer.Client.Close();
+            udpServer.Close();
             // Send connect request via tcp
             commandTransmitter.SendCommand(CommandType.ConnectionRequest,
                 new ConnectionRequestCommandArgs()
@@ -74,14 +78,23 @@ namespace BiRD
             udpServer = new UdpClient(11000);
             while (true)
             {
-                var remoteEP = new IPEndPoint(IPAddress.Any, 11000);
-                byte[] data = udpServer.Receive(ref remoteEP); // listen on port 11000
-                //Console.WriteLine("receive data from " + remoteEP.ToString());
-                //Console.WriteLine(ByteArrayToString(data));
-                //HandleData(data);
-                // NOTE: Possible speed increse.
-                Task.Run(() => HandleData(data));
-                //udpServer.Send(new byte[] { 1 }, 1, remoteEP); // reply back, reqires listener on other side.
+                try
+                {
+                    var remoteEP = new IPEndPoint(IPAddress.Any, 11000);
+                    if (shouldRecieve)
+                    {
+                        byte[] data = udpServer.Receive(ref remoteEP); // listen on port 11000
+                                                                       //Console.WriteLine("receive data from " + remoteEP.ToString());
+                                                                       //Console.WriteLine(ByteArrayToString(data));
+                        HandleData(data);
+                    }
+                    // NOTE: Possible speed increse.
+                    //Task.Run(() => HandleData(data));
+                    //udpServer.Send(new byte[] { 1 }, 1, remoteEP); // reply back, reqires listener on other side.
+                } catch (SocketException ex)
+                {
+                    var errorcode = ex.ErrorCode;
+                }
             }
         }
 
