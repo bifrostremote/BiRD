@@ -1,4 +1,5 @@
-﻿using BifrostRemoteDesktop.Common.SystemControllers;
+﻿using BifrostRemoteDesktop.Common.Network;
+using BifrostRemoteDesktop.Common.SystemControllers;
 
 namespace BifrostRemoteDesktop.Common.Models.Commands
 {
@@ -14,5 +15,6 @@ namespace BifrostRemoteDesktop.Common.Models.Commands
         }
 
         public abstract void Execute();
+        public virtual void Execute(object obj) { }
     }
 }

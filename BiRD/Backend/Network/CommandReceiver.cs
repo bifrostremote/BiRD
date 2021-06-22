@@ -2,6 +2,8 @@
 using BifrostRemoteDesktop.Common.Factories;
 using BifrostRemoteDesktop.Common.Models.Commands;
 using BifrostRemoteDesktop.Common.SystemControllers;
+using BiRD;
+using BiRD.Backend.Models.Commands;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -17,6 +19,7 @@ namespace BifrostRemoteDesktop.Common.Network
         private readonly ISystemController _systemController;
         private Thread thread;
         private TcpListener tcpListener;
+        public ClientWindow client;
 
 
         public CommandReceiver(ISystemController systemController)
@@ -28,6 +31,11 @@ namespace BifrostRemoteDesktop.Common.Network
         {
             Stop();
             tcpListener.Stop();
+        }
+
+        public void ParseWindow(ClientWindow cl)
+        {
+            client = cl;
         }
 
         public void Start()
@@ -56,7 +64,7 @@ namespace BifrostRemoteDesktop.Common.Network
             }
         }
 
-        private static void Listen(object obj)
+        private void Listen(object obj)
         {
             if (obj is CommandReceiver commandReceiver)
             {
@@ -77,7 +85,11 @@ namespace BifrostRemoteDesktop.Common.Network
                         {
                             ICommand command = ParseCommandFromPackage(
                                 commandReceiver._systemController, package);
-                            command.Execute();
+                            // TODO: This is a hack, maby make it right later?
+                            if (command is ConnectionRequestCommand)
+                                command.Execute(client);
+                            else
+                                command.Execute();
                         }
                     }
 

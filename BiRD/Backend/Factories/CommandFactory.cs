@@ -30,6 +30,10 @@ namespace BifrostRemoteDesktop.Common.Factories
                     {
                         return new KeyboardInputCommand(systemController, (KeyboardInputCommandArgs)commandArgs);
                     }
+                case CommandType.ConnectionRequest:
+                    {
+                        return new ConnectionRequestCommand(systemController, (ConnectionRequestCommandArgs)commandArgs);
+                    }
                 default:
                     {
                         throw new ArgumentException($"The argument of parameter {nameof(commandType)} does not corrospond to a any known command.");

@@ -34,7 +34,7 @@
                         <ColumnDefinition Width="111*" />
                         <ColumnDefinition Width="683*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="lbl_Token" Content="" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" Margin="123,0,0,0"/>
+                    <Label x:Name="lbl_Token" Content="" MouseLeftButtonUp="lbl_Token_MouseLeftButtonUp" ToolTip="Click to copy" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" Margin="123,0,0,0"/>
                     <ComboBox x:Name="cmb_machines" HorizontalAlignment="Left" Margin="186,115,0,0" VerticalAlignment="Top" Width="200" FontSize="20" 
                               DisplayMemberPath="Name"
                               Grid.Column="1"/>

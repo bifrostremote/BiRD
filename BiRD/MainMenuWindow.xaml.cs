@@ -57,14 +57,41 @@ namespace BiRD
         {
             _api = BifrostAPI.GetInstance();
             this.DataContext = this;
-             LoadMachines += this.ClientPage_LoadMachine;
+            LoadMachines += this.ClientPage_LoadMachine;
 
             InitializeComponent();
         }
 
         public event EventHandler<RoutedEventArgs> LoadMachines;
 
+        private void ClientPage_LoadMachine(object sender, RoutedEventArgs e)
+        {
+            List<Machine> machines = _api.GetMachines(new Guid(_userUid));
 
+            cmb_machines.ItemsSource = machines;
+
+            cmb_addresses.ItemsSource = GetIpAddresses();
+
+            //_availableMachines = new ObservableCollection<Machine>(machines);
+        }
+
+        private static ObservableCollection<string> GetIpAddresses()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            ObservableCollection<string> addresses = new ObservableCollection<string>();
+
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    addresses.Add(ip.ToString());
+                }
+            }
+
+            return addresses;
+        }
+
+        #region Login
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             if (check_usetestserver.IsChecked == true)
@@ -72,10 +99,11 @@ namespace BiRD
             else
                 _api.UseLiveServer();
 
+            // Gather credentials
             string username = txtbox_username.Text;
             string password = txtbox_password.Text;
 
-
+            // User login
             string dirtyResult = _api.Login(username, password);
             _userUid = dirtyResult.Replace("\"", "");
 
@@ -101,7 +129,9 @@ namespace BiRD
                 lbl_incorrectlogin.Visibility = Visibility.Visible;
             }
         }
+        #endregion
 
+        #region Client
         private void Generatetoken_click(object sender, RoutedEventArgs e)
         {
             Machine machine = (Machine)cmb_machines.SelectedItem;
@@ -114,41 +144,37 @@ namespace BiRD
             lbl_Token.Content = token;
         }
 
-        private void ClientPage_LoadMachine(object sender, RoutedEventArgs e) 
+        private void btn_OpenRemote_Click(object sender, RoutedEventArgs e)
         {
-            List<Machine> machines = _api.GetMachines(new Guid(_userUid));
-
-            cmb_machines.ItemsSource = machines;
-
-            cmb_addresses.ItemsSource = GetIpAddresses();
-
-            //_availableMachines = new ObservableCollection<Machine>(machines);
+            ClientWindow clientWindow = new ClientWindow();
+            clientWindow.Show();
         }
 
+        private void lbl_Token_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Clipboard.SetText(((Label)sender).Content.ToString());
+        }
+        #endregion
+
+        #region Supporter
         private void btn_connect_click(object sender, RoutedEventArgs e)
         {
             string ip = _api.GetMachineIp(txtbox_SupporterToken.Text);
 
             if (ip == "")
             {
-
+                // TODO: Add error message.
+                return;
             }
 
-            PlayerWindow playerWindow = new PlayerWindow(ip);
-            playerWindow.Show();
-
+            SupporterWindow supporterWindow = new SupporterWindow(ip);
+            supporterWindow.Show();
         }
+        #endregion
 
-        private void btn_OpenRemote_Click(object sender, RoutedEventArgs e)
-        {
-            RecorderWindow recorderWindow = new RecorderWindow();
-            recorderWindow.Show();
-        }
-
+        #region Enroll
         private void btn_Enroll_Click(object sender, RoutedEventArgs e)
         {
-
-
             try
             {
                 string machineName = Environment.MachineName;
@@ -173,21 +199,6 @@ namespace BiRD
 
             }
         }
-
-        private static ObservableCollection<string> GetIpAddresses()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            ObservableCollection<string> addresses = new ObservableCollection<string>();
-
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    addresses.Add(ip.ToString());
-                }
-            }
-
-            return addresses;
-        }
+        #endregion
     }
 }

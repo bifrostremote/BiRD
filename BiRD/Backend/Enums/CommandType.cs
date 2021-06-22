@@ -5,6 +5,7 @@
         MovePointer,
         MouseAction,
         MovePointerPercentage,
-        KeyboardInputCommand
+        KeyboardInputCommand,
+        ConnectionRequest
     }
 }
