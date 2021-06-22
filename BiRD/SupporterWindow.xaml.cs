@@ -46,26 +46,26 @@ namespace BiRD
             commandTransmitter.SendCommand(CommandType.ConnectionRequest,
                 new ConnectionRequestCommandArgs()
                 {
-                    IP = GetIpAddresses()[1],
+                    IP = ClientIP,
                     StreamRunning = true
-                });
+                }); ;
         }
 
-        private static List<string> GetIpAddresses()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            List<string> addresses = new List<string>();
+        //private static List<string> GetIpAddresses()
+        //{
+        //    var host = Dns.GetHostEntry(Dns.GetHostName());
+        //    List<string> addresses = new List<string>();
 
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    addresses.Add(ip.ToString());
-                }
-            }
+        //    foreach (var ip in host.AddressList)
+        //    {
+        //        if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+        //        {
+        //            addresses.Add(ip.ToString());
+        //        }
+        //    }
 
-            return addresses;
-        }
+        //    return addresses;
+        //}
 
         private void OnWindowclose(object sender, EventArgs e)
         {
