@@ -76,7 +76,7 @@ namespace BiRD
         {
             //Console.WriteLine("Hello World!");
             udpServer = new UdpClient(11000);
-            while (true)
+            while (shouldRecieve)
             {
                 try
                 {
@@ -86,11 +86,12 @@ namespace BiRD
                         byte[] data = udpServer.Receive(ref remoteEP); // listen on port 11000
                                                                        //Console.WriteLine("receive data from " + remoteEP.ToString());
                                                                        //Console.WriteLine(ByteArrayToString(data));
-                        HandleData(data);
+                        //HandleData(data);
+                        // NOTE: Possible speed increse.
+                        Task.Run(() => HandleData(data));
+                        //udpServer.Send(new byte[] { 1 }, 1, remoteEP); // reply back, reqires listener on other side.
                     }
-                    // NOTE: Possible speed increse.
-                    //Task.Run(() => HandleData(data));
-                    //udpServer.Send(new byte[] { 1 }, 1, remoteEP); // reply back, reqires listener on other side.
+
                 } catch (SocketException ex)
                 {
                     var errorcode = ex.ErrorCode;
