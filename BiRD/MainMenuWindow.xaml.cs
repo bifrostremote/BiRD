@@ -108,7 +108,7 @@ namespace BiRD
 
             // Gather credentials
             string username = txtbox_username.Text;
-            string password = txtbox_password.Text;
+            string password = txtbox_password.Password;
 
             // User login
             string dirtyResult = _api.Login(username, password);

@@ -21,7 +21,7 @@
                     <Label x:Name="lbl_username" Content="Username" HorizontalAlignment="Left" Margin="126,50,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
                     <TextBox x:Name="txtbox_username" HorizontalAlignment="Left" Margin="125,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="20" Grid.Column="1"/>
                     <Label x:Name="lbl_Password" Content="Password" HorizontalAlignment="Left" Margin="129,111,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
-                    <TextBox x:Name="txtbox_password" HorizontalAlignment="Left" Margin="125,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="20" Grid.Column="1"/>
+                    <PasswordBox x:Name="txtbox_password" PasswordChar="*" HorizontalAlignment="Left" Margin="125,148,0,0" VerticalAlignment="Top" Width="300" FontSize="20" Grid.Column="1"/>
                     <CheckBox x:Name="check_usetestserver" Content="Use testserver" HorizontalAlignment="Left" Margin="129,196,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Normal" Grid.Column="1"/>
                     <Label x:Name="lbl_incorrectlogin" Content="Username or password was incorrect" HorizontalAlignment="Left" Margin="108,225,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFEA0F0F" Visibility="Hidden" Grid.Column="1"/>
                     <Button Content="Login" HorizontalAlignment="Left" Margin="242,0,0,20" VerticalAlignment="Bottom" FontSize="25" Click="Login_Click" Grid.Column="1"/>
