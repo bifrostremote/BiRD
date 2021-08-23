@@ -70,6 +70,15 @@
                 </Grid>
 
             </TabItem>
+            <TabItem Header="Direct">
+
+                <StackPanel>
+                    <TextBlock Text="Remote IP"/>
+                    <TextBox Name="txtbox_direct_ip"/>
+                    <Button Click="StartSupporterDirect">Start Supporter</Button>
+                    <Button Click="StartClientDirect">Start Client</Button>
+                </StackPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

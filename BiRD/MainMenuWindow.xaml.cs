@@ -209,5 +209,18 @@ namespace BiRD
             }
         }
         #endregion
+
+        private void StartSupporterDirect(object sender, RoutedEventArgs e)
+        {
+            SupporterWindow supporterWindow = new SupporterWindow(txtbox_direct_ip.Text, "127.0.0.1");
+            supporterWindow.Show();
+
+        }
+
+        private void StartClientDirect(object sender, RoutedEventArgs e)
+        {
+            ClientWindow clientWindow = new ClientWindow();
+            clientWindow.Show();
+        }
     }
 }
